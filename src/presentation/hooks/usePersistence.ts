@@ -20,7 +20,6 @@ export const usePersistence = <T,>(key: string, initialValue: T): [T, (value: T)
     }
   };
 
-  // Sincronizar entre pestañas
   useEffect(() => {
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === key && e.newValue) {

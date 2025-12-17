@@ -20,7 +20,7 @@ export const CharacterModal: React.FC<CharacterModalProps> = ({
   useEffect(() => {
     if (character && isOpen) {
       setLoadingEpisodes(true);
-      fetchEpisodes(character.episode.slice(0, 5)) // Limitar a primeros 5 episodios por rendimiento
+      fetchEpisodes(character.episode.slice(0, 5)) 
         .then(setEpisodes)
         .finally(() => setLoadingEpisodes(false));
     }
@@ -51,7 +51,7 @@ export const CharacterModal: React.FC<CharacterModalProps> = ({
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Columna izquierda: Imagen e información básica */}
+            {}
             <div className="md:col-span-1">
               <img
                 src={character.image}
@@ -82,9 +82,9 @@ export const CharacterModal: React.FC<CharacterModalProps> = ({
               </div>
             </div>
             
-            {/* Columna derecha: Información detallada */}
+            {}
             <div className="md:col-span-2 space-y-6">
-              {/* Origen y Localización */}
+              {}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="bg-gray-50 p-4 rounded-lg">
                   <h3 className="font-bold text-gray-700 mb-2">Origin</h3>
@@ -97,7 +97,7 @@ export const CharacterModal: React.FC<CharacterModalProps> = ({
                 </div>
               </div>
               
-              {/* Episodios */}
+              {}
               <div className="bg-gray-50 p-4 rounded-lg">
                 <h3 className="font-bold text-gray-700 mb-4">Recent Episodes</h3>
                 

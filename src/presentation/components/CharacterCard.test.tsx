@@ -21,11 +21,15 @@ describe('CharacterCard', () => {
 
   const mockOnClick = vi.fn();
 
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
   it('renders character information correctly', () => {
     render(<CharacterCard character={mockCharacter} onClick={mockOnClick} />);
     
     expect(screen.getByText('Rick Sanchez')).toBeInTheDocument();
-    expect(screen.getByText('Species:')).toBeInTheDocument();
+    expect(screen.getByAltText('Rick Sanchez')).toBeInTheDocument();
     expect(screen.getByText('Human')).toBeInTheDocument();
     expect(screen.getByText('Alive')).toBeInTheDocument();
   });
@@ -33,24 +37,42 @@ describe('CharacterCard', () => {
   it('calls onClick when clicked', () => {
     render(<CharacterCard character={mockCharacter} onClick={mockOnClick} />);
     
-    const card = screen.getByText('Rick Sanchez').closest('div');
-    fireEvent.click(card!);
+    const card = screen.getByTestId('character-card') || 
+                 screen.getByRole('button', { name: /rick sanchez/i });
+    fireEvent.click(card);
     
+    expect(mockOnClick).toHaveBeenCalledTimes(1);
     expect(mockOnClick).toHaveBeenCalledWith(mockCharacter);
   });
 
-  it('shows correct status color for Alive status', () => {
-    render(<CharacterCard character={mockCharacter} onClick={mockOnClick} />);
-    
-    const statusIndicator = screen.getByText('Alive').previousSibling;
-    expect(statusIndicator).toHaveClass('bg-green-500');
-  });
+  describe('Status indicators', () => {
+    it('shows green dot for Alive status', () => {
+      render(<CharacterCard character={mockCharacter} onClick={mockOnClick} />);
+      
+      const statusContainer = screen.getByText('Alive').closest('div');
+      const dotElement = statusContainer?.querySelector('.bg-green-500');
+      
+      expect(dotElement).toBeInTheDocument();
+    });
 
-  it('shows correct status color for Dead status', () => {
-    const deadCharacter = { ...mockCharacter, status: 'Dead' as const };
-    render(<CharacterCard character={deadCharacter} onClick={mockOnClick} />);
-    
-    const statusIndicator = screen.getByText('Dead').previousSibling;
-    expect(statusIndicator).toHaveClass('bg-red-500');
+    it('shows red dot for Dead status', () => {
+      const deadCharacter = { ...mockCharacter, status: 'Dead' as const };
+      render(<CharacterCard character={deadCharacter} onClick={mockOnClick} />);
+      
+      const statusContainer = screen.getByText('Dead').closest('div');
+      const dotElement = statusContainer?.querySelector('.bg-red-500');
+      
+      expect(dotElement).toBeInTheDocument();
+    });
+
+    it('shows gray dot for unknown status', () => {
+      const unknownCharacter = { ...mockCharacter, status: 'unknown' as const };
+      render(<CharacterCard character={unknownCharacter} onClick={mockOnClick} />);
+      
+      const statusContainer = screen.getByText('unknown').closest('div');
+      const dotElement = statusContainer?.querySelector('.bg-gray-500');
+      
+      expect(dotElement).toBeInTheDocument();
+    });
   });
 });
