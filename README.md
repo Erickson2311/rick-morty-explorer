@@ -1,7 +1,6 @@
 # Rick & Morty Explorer
 
-Aplicación web desarrollada como **Single Page Application (SPA)** que consume la API pública de *Rick and Morty*. El proyecto está enfocado en buenas prácticas de desarrollo frontend, una arquitectura clara y una experiencia de usuario fluida en distintos dispositivos.
-
+Aplicación web desarrollada como **Single Page Application (SPA)** que consume la API pública de *Rick and Morty*. 
 ---
 
 ##  Características
